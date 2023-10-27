@@ -16,7 +16,6 @@ export default function App() {
       )
     );
   }
-
   return (
     <div className="app">
       <Logo />
@@ -26,7 +25,7 @@ export default function App() {
         onDeleteItems={handleDeleteItems}
         onToggleItem={handleToggleItem}
       />
-      <Stats />
+      <Stats items={items} />
     </div>
   );
 }
@@ -81,11 +80,26 @@ function Form({ onAddItems }) {
 }
 
 function PackingList({ items, onDeleteItems, onToggleItem }) {
+  const [sortBy, setSortBy] = useState("input");
+
+  let sortedItems;
+
+  if (sortBy === "input") sortedItems = items;
+
+  if (setSortBy === "description")
+    sortedItems = items
+      .slice()
+      .sort((a, b) => a.description.localeCompare(b.description));
+
+  if (sortBy === "packed")
+    sortedItems = items
+      .slice()
+      .sort((a, b) => Number(a.packed) - Number(b.packed));
   return (
     <>
       <div className="list">
         <ul>
-          {items.map((item) => (
+          {sortedItems.map((item) => (
             <Item
               item={item}
               onDeleteItems={onDeleteItems}
@@ -94,6 +108,13 @@ function PackingList({ items, onDeleteItems, onToggleItem }) {
             />
           ))}
         </ul>
+      </div>
+      <div className="actions list">
+        <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <option value="input">sort by input order</option>
+          <option value="description">sort by description</option>
+          <option value="packed">sort by packed status</option>
+        </select>
       </div>
     </>
   );
@@ -113,10 +134,23 @@ function Item({ item, onDeleteItems, onToggleItem }) {
     </li>
   );
 }
-function Stats() {
+function Stats({ items }) {
+  if (!items.length)
+    return (
+      <p className="stats">
+        <em> Start adding some items to your packing list 🚀 </em>
+      </p>
+    );
+  const numItems = items.length;
+  const numPacked = items.filter((item) => item.packed).length;
+  const percentage = Math.round((numPacked / numItems) * 100);
   return (
     <footer className="stats">
-      <em>💼 you have x item on your list, and you already packed x (x%)</em>
+      <em>
+        {percentage === 100
+          ? "You got everything! Ready to go ✈"
+          : `💼 you have ${numItems} item on your list, and you already packed ${numPacked} (${percentage}%)`}
+      </em>
     </footer>
   );
 }
