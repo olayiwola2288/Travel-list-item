@@ -36,18 +36,30 @@ export default function PackingList({
           ))}
         </ul>
       </div>
-      <div className=" actions list">
-        <div className="lg:flex">
-          <div className="mt-5">
-            <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
-              <option value="input">sort by input order</option>
-              <option value="description">sort by description</option>
-              <option value="packed">sort by packed status</option>
+      <div className="bg-[#5a3e2b] text-[#ffebb3] lg:flex justify-center gap-5 pb-5 ">
+        <div className="lg:flex lg:gap-5">
+          <div className="mt-5 flex flex-col justify-center">
+            <select
+              value={sortBy}
+              onChange={(e) => setSortBy(e.target.value)}
+              className="text-center text-[#5a3e2b] mx-20"
+            >
+              <option value="input" className="text-[#5a3e2b]">
+                sort by input order
+              </option>
+              <option value="description" className="text-[#5a3e2b]">
+                sort by description
+              </option>
+              <option value="packed" className="text-[#5a3e2b]">
+                sort by packed status
+              </option>
             </select>
           </div>
 
-          <div className="flex justify-center flex-col mt-5">
-            <button onClick={onClearList}>Clear list</button>
+          <div className="flex justify-center flex-col mt-5 mx-20">
+            <button onClick={onClearList} className="">
+              Clear list
+            </button>
           </div>
         </div>
       </div>
