@@ -57,7 +57,7 @@ export default function PackingList({
           </div>
 
           <div className="flex justify-center flex-col mt-5 mx-20">
-            <button onClick={onClearList} className="">
+            <button onClick={onClearList} className="text-[#5a3e2b] ">
               Clear list
             </button>
           </div>

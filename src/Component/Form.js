@@ -36,7 +36,7 @@
       <input
         type="text"
         placeholder="item..."
-        className="ms-5 "
+        className="ms-5 ps-10"
         value={description}
         onChange={(e) => setDescription(e.target.value)}
       />
